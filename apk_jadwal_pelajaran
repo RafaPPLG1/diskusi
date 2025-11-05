@@ -1,0 +1,103 @@
+const prompt = require("prompt-sync")({ sigint: true });
+
+let jadwal = {};
+let username = "";
+
+// Login
+console.log("=================================");
+console.log("   SISTEM JADWAL PELAJARAN");
+console.log("=================================\n");
+
+username = prompt("Masukkan username untuk login: ");
+console.log(`\nSelamat datang, ${username}!\n`);
+
+while (true) {
+    console.log("========== MENU ==========");
+    console.log("1. Tambah Pelajaran");
+    console.log("2. Lihat Jadwal");
+    console.log("3. Keluar");
+    console.log("4. Cari Pelajaran (Sequential Search)");
+    console.log("5. Urutkan Jadwal per Hari (Bubble Sort)");
+    console.log("==========================");
+    let pilih = prompt("Pilih menu (1/2/3/4/5): ");
+
+    if (pilih === "1") {
+        let hari = prompt("Masukkan hari: ");
+        let jam = prompt("Masukkan jam (contoh: 08:00 - 09:00): ");
+        let pelajaran = prompt("Masukkan nama pelajaran: ");
+
+        if (!jadwal[hari]) {
+            jadwal[hari] = [];
+        }
+
+        jadwal[hari].push({ jam, pelajaran });
+        console.log("\n Pelajaran berhasil ditambahkan!\n");
+
+    } else if (pilih === "2") {
+        console.log("\n===== JADWAL PELAJARAN =====");
+        if (Object.keys(jadwal).length === 0) {
+            console.log("Belum ada jadwal tersimpan.\n");
+        } else {
+            for (let hari in jadwal) {
+                console.log(`\n${hari.toUpperCase()}:`);
+                jadwal[hari].forEach((item) => {
+                    console.log(`- [${item.jam}] ${item.pelajaran}`);
+                });
+            }
+            console.log();
+        }
+
+    } else if (pilih === "3") {
+        console.log(`\nTerima kasih, ${username}!`);
+        console.log("Program selesai.\n");
+        break;
+
+    } else if (pilih === "4") {
+        // SEQUENTIAL SEARCH
+        if (Object.keys(jadwal).length === 0) {
+            console.log("\n Belum ada data jadwal untuk dicari.\n");
+        } else {
+            let cari = prompt("Masukkan nama pelajaran yang ingin dicari: ");
+            let ditemukan = false;
+
+            for (let hari in jadwal) {
+                for (let i = 0; i < jadwal[hari].length; i++) {
+                    if (jadwal[hari][i].pelajaran.toLowerCase() === cari.toLowerCase()) {
+                        console.log(` Ditemukan di ${hari} jam ${jadwal[hari][i].jam}`);
+                        ditemukan = true;
+                    }
+                }
+            }
+
+            if (!ditemukan) {
+                console.log(` Pelajaran "${cari}" tidak ditemukan dalam jadwal.\n`);
+            }
+        }
+
+    } else if (pilih === "5") {
+        // BUBBLE SORT
+        if (Object.keys(jadwal).length === 0) {
+            console.log("\n Tidak ada jadwal untuk diurutkan.\n");
+        } else {
+            for (let hari in jadwal) {
+                let arr = jadwal[hari];
+                for (let i = 0; i < arr.length - 1; i++) {
+                    for (let j = 0; j < arr.length - i - 1; j++) {
+                        // ambil jam awal dari format "08:00 - 09:00"
+                        let jamA = arr[j].jam.split(" - ")[0];
+                        let jamB = arr[j + 1].jam.split(" - ")[0];
+                        if (jamA > jamB) {
+                            let temp = arr[j];
+                            arr[j] = arr[j + 1];
+                            arr[j + 1] = temp;
+                        }
+                    }
+                }
+            }
+            console.log("\n Jadwal berhasil diurutkan berdasarkan jam!\n");
+        }
+
+    } else {
+        console.log("\n Pilihan tidak valid, coba lagi.\n");
+    }
+}
