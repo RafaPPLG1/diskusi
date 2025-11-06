@@ -1,0 +1,21 @@
+  } else if (pilih === "4") {
+        // SEQUENTIAL SEARCH
+        if (Object.keys(jadwal).length === 0) {
+            console.log("\n Belum ada data jadwal untuk dicari.\n");
+        } else {
+            let cari = prompt("Masukkan nama pelajaran yang ingin dicari: ");
+            let ditemukan = false;
+
+            for (let hari in jadwal) {
+                for (let i = 0; i < jadwal[hari].length; i++) {
+                    if (jadwal[hari][i].pelajaran.toLowerCase() === cari.toLowerCase()) {
+                        console.log(` Ditemukan di ${hari} jam ${jadwal[hari][i].jam}`);
+                        ditemukan = true;
+                    }
+                }
+            }
+
+            if (!ditemukan) {
+                console.log(` Pelajaran "${cari}" tidak ditemukan dalam jadwal.\n`);
+            }
+        }
