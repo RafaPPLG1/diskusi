@@ -1,0 +1,27 @@
+} else if (pilih === "5") {
+        // BUBBLE SORT
+        if (Object.keys(jadwal).length === 0) {
+            console.log("\n Tidak ada jadwal untuk diurutkan.\n");
+        } else {
+            for (let hari in jadwal) {
+                let arr = jadwal[hari];
+                for (let i = 0; i < arr.length - 1; i++) {
+                    for (let j = 0; j < arr.length - i - 1; j++) {
+                        // ambil jam awal dari format "08:00 - 09:00"
+                        let jamA = arr[j].jam.split(" - ")[0];
+                        let jamB = arr[j + 1].jam.split(" - ")[0];
+                        if (jamA > jamB) {
+                            let temp = arr[j];
+                            arr[j] = arr[j + 1];
+                            arr[j + 1] = temp;
+                        }
+                    }
+                }
+            }
+            console.log("\n Jadwal berhasil diurutkan berdasarkan jam!\n");
+        }
+
+    } else {
+        console.log("\n Pilihan tidak valid, coba lagi.\n");
+    }
+}
